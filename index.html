@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .btn {
+      background-color: #3498db;
+      color: #fff;
+      padding: 20px;
+      margin: 5px;
+      border: 2px solid #fff;
+      outline: none;
+      border-radius: 8px;
+      font-size: 32px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background-color 0.5s ease;
+      width: 100px;
+    }
+
+    .btn.active {
+      background-color: #e74c3c;
+    }
+
+    .btn.yellow-stage {
+      background-color: yellow;
+      color: black;
+    }
+
+    .btn:disabled {
+      background-color: #7f8c8d;
+      cursor: not-allowed;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #0b061f;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .parent {
+      border: 0px solid black;
+      margin: 1rem;
+      padding-top: 2rem;
+      text-align: center;
+    }
+
+    .button {
+      background-color: #0b061f;
+      border: 5px black;
+      border-radius: 5px;
+      color: yellow;
+      padding: 16px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+    }
+
+    .button1 {
+      background-color: #0b061f;
+      color: white;
+      border: 2px solid yellow;
+    }
+
+    .button1:hover {
+      background-color: yellow;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="color: #fff; text-align:center;">Button Lights</h1>
+  <form id="buttonForm" action="/submit" method="post">
+    <div>
+      <div style="margin: auto;" class="parent">
+        <button class="btn" id="btn1" type="button">1</button>
+        <button class="btn" id="btn2" type="button">2</button>
+        <button class="btn" id="btn3" type="button">3</button>
+        <button class="btn" id="btn4" type="button">4</button>
+        <button class="btn" id="btn5" type="button">5</button>
+      </div>
+      <div style="margin: auto;" class="parent">
+        <button class="btn" id="btn6" type="button">6</button>
+        <button class="btn" id="btn7" type="button">7</button>
+        <button class="btn" id="btn8" type="button">8</button>
+        <button class="btn" id="btn9" type="button">9</button>
+        <button class="btn" id="btn10" type="button">10</button>
+      </div>
+      <div style="margin: auto;" class="parent">
+        <button class="btn" id="btn11" type="button">11</button>
+        <button class="btn" id="btn12" type="button">12</button>
+        <button class="btn" id="btn13" type="button">13</button>
+        <button class="btn" id="btn14" type="button">14</button>
+        <button class="btn" id="btn15" type="button">15</button>
+      </div>
+      <div style="margin: auto;" class="parent">
+        <button class="btn" id="btn16" type="button">16</button>
+        <button class="btn" id="btn17" type="button">17</button>
+        <button class="btn" id="btn18" type="button">18</button>
+        <button class="btn" id="btn19" type="button">19</button>
+        <button class="btn" id="btn20" type="button">20</button>
+      </div>
+    </div>
+    <div style="margin: auto;" class="parent">
+      <button class="button button1" id="greenButton" type="submit">Submit</button>
+    </div>
+    <input type="hidden" name="active_buttons" id="activeButtons" value="">
+    <input type="hidden" name="yellow_buttons" id="yellowButtons" value="">
+  </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const buttons = document.querySelectorAll('.btn');
+  
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          if (this.classList.contains('active')) {
+            this.classList.remove('active');
+            this.classList.remove('yellow-stage');
+          } else if (this.classList.contains('yellow-stage')) {
+            this.classList.remove('yellow-stage');
+          } else {
+            const selectedCount = document.querySelectorAll('.active').length;
+            if (selectedCount < 2) {
+              this.classList.add('active');
+            } else {
+              this.classList.add('yellow-stage');
+            }
+          }
+          updateSelectedButtons();
+        });
+      });
+  
+      function updateSelectedButtons() {
+        const activeButtons = Array.from(document.querySelectorAll('.active')).map(button => button.textContent);
+        const yellowButtons = Array.from(document.querySelectorAll('.yellow-stage')).map(button => button.textContent);
+        
+        document.getElementById('activeButtons').value = JSON.stringify(activeButtons);
+        document.getElementById('yellowButtons').value = JSON.stringify(yellowButtons);
+      }
+    });
+  </script>
+  
+  
+</body>
+</html>
